@@ -9,6 +9,15 @@
         <title>1.4.1</title>
         <description>
           <![CDATA[
+          <ul>
+              <li>1.5</li>
+              <li>Add shadowsocks simple-obfs support</li>
+              <li>Add DOMAIN rule support</li>
+              <li>Improve HTTP proxy server handler</li>
+              <li>Fix rule ipv6 address parser</li>
+              <li>Support keyboard shortcut</li>
+          </ul>
+              
             <ul>
               <li>1.4.1</li>
               <li>Support Vmess with TLS.</li>
