@@ -10,4 +10,4 @@ import Foundation
 let kShouldUpDateConfig =  Notification.Name("kShouldUpDateConfig")
 let kConfigFileChange =  Notification.Name("kConfigFileChange")
 let kSystemNetworkStatusDidChange =  Notification.Name("kSystemNetworkStatusDidChange")
-
+let kProxyServiceVPNStatusNotification = Notification.Name("kProxyServiceVPNStatusNotification")

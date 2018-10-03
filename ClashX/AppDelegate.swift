@@ -269,6 +269,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func actionCopyExportCommand(_ sender: Any) {
+        VpnManager.shared.connect()
+        return
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         let port = ConfigManager.shared.currentConfig?.port ?? 0

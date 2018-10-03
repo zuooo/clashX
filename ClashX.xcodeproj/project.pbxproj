@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0D318CDAC9464E01DAD1F92B /* Pods_ClashX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358BF8F0CBD7FF9A7EA4E30 /* Pods_ClashX.framework */; };
+		4905EC962164FDBF002E6559 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4905EC952164FDBF002E6559 /* PacketTunnelProvider.swift */; };
+		4905EC9B2164FDBF002E6559 /* PacketTunnel.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4905EC932164FDBF002E6559 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4905ECA32164FE45002E6559 /* VpnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4905ECA22164FE45002E6559 /* VpnManager.swift */; };
+		4905ECA62164FF34002E6559 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4905ECA52164FF34002E6559 /* NetworkExtension.framework */; };
+		4905ECA72165003B002E6559 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4905ECA52164FF34002E6559 /* NetworkExtension.framework */; };
 		4913C82321157D0200F6B87C /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913C82221157D0200F6B87C /* Notification.swift */; };
 		492C4869210EE6B9004554A0 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C4868210EE6B9004554A0 /* ApiRequest.swift */; };
 		492C4871210EF62E004554A0 /* ClashConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C4870210EF62E004554A0 /* ClashConfig.swift */; };
@@ -55,6 +60,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4905EC992164FDBF002E6559 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49CF3B1520CD7463001EBF94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4905EC922164FDBF002E6559;
+			remoteInfo = PacketTunnel;
+		};
 		4949D15A213260BD00EF85E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49CF3B4B20CE5232001EBF94 /* ProxyConfig.xcodeproj */;
@@ -79,6 +91,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4905EC9F2164FDBF002E6559 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4905EC9B2164FDBF002E6559 /* PacketTunnel.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495A44CC20D266B000888A0A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +126,12 @@
 
 /* Begin PBXFileReference section */
 		0358BF8F0CBD7FF9A7EA4E30 /* Pods_ClashX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClashX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4905EC932164FDBF002E6559 /* PacketTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4905EC952164FDBF002E6559 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		4905EC972164FDBF002E6559 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4905EC982164FDBF002E6559 /* PacketTunnel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PacketTunnel.entitlements; sourceTree = "<group>"; };
+		4905ECA22164FE45002E6559 /* VpnManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
+		4905ECA52164FF34002E6559 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		4913C82221157D0200F6B87C /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		492C4868210EE6B9004554A0 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		492C4870210EF62E004554A0 /* ClashConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClashConfig.swift; sourceTree = "<group>"; };
@@ -162,6 +191,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4905EC902164FDBF002E6559 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4905ECA72165003B002E6559 /* NetworkExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495A44B920D2660A00888A0A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -174,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4989F98020D01C8F0001E564 /* clash.a in Frameworks */,
+				4905ECA62164FF34002E6559 /* NetworkExtension.framework in Frameworks */,
 				0D318CDAC9464E01DAD1F92B /* Pods_ClashX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +219,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4905EC942164FDBF002E6559 /* PacketTunnel */ = {
+			isa = PBXGroup;
+			children = (
+				4905EC952164FDBF002E6559 /* PacketTunnelProvider.swift */,
+				4905EC972164FDBF002E6559 /* Info.plist */,
+				4905EC982164FDBF002E6559 /* PacketTunnel.entitlements */,
+			);
+			path = PacketTunnel;
+			sourceTree = "<group>";
+		};
 		4913C82021157CEB00F6B87C /* Macro */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +241,7 @@
 		492C4866210EE69B004554A0 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				4905ECA22164FE45002E6559 /* VpnManager.swift */,
 				4966E9E22118153A00A391FB /* NSUserNotificationCenter+Extension.swift */,
 				492C4868210EE6B9004554A0 /* ApiRequest.swift */,
 				4952C3BE2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift */,
@@ -302,6 +351,7 @@
 			children = (
 				49CF3B1F20CD7463001EBF94 /* ClashX */,
 				495A44BD20D2660A00888A0A /* ClashXLaunchHelper */,
+				4905EC942164FDBF002E6559 /* PacketTunnel */,
 				49CF3B1E20CD7463001EBF94 /* Products */,
 				76229F122B00E935D126742A /* Pods */,
 				CF1AC9FACC36FCE7663C5583 /* Frameworks */,
@@ -314,6 +364,7 @@
 			children = (
 				49CF3B1D20CD7463001EBF94 /* ClashX.app */,
 				495A44BC20D2660A00888A0A /* ClashXLaunchHelper.app */,
+				4905EC932164FDBF002E6559 /* PacketTunnel.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -383,6 +434,7 @@
 		CF1AC9FACC36FCE7663C5583 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4905ECA52164FF34002E6559 /* NetworkExtension.framework */,
 				0358BF8F0CBD7FF9A7EA4E30 /* Pods_ClashX.framework */,
 			);
 			name = Frameworks;
@@ -391,6 +443,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4905EC922164FDBF002E6559 /* PacketTunnel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4905EC9E2164FDBF002E6559 /* Build configuration list for PBXNativeTarget "PacketTunnel" */;
+			buildPhases = (
+				4905EC8F2164FDBF002E6559 /* Sources */,
+				4905EC902164FDBF002E6559 /* Frameworks */,
+				4905EC912164FDBF002E6559 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PacketTunnel;
+			productName = PacketTunnel;
+			productReference = 4905EC932164FDBF002E6559 /* PacketTunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		495A44BB20D2660A00888A0A /* ClashXLaunchHelper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 495A44C920D2660B00888A0A /* Build configuration list for PBXNativeTarget "ClashXLaunchHelper" */;
@@ -420,12 +489,14 @@
 				A741C26F5755233F0D7CEC6F /* [CP] Embed Pods Frameworks */,
 				D3688B5A70792067918E9514 /* [CP] Copy Pods Resources */,
 				663E4677213FCDC4006F11BB /* CopyFiles */,
+				4905EC9F2164FDBF002E6559 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				663E4675213FCD50006F11BB /* PBXTargetDependency */,
 				495A44CF20D2671F00888A0A /* PBXTargetDependency */,
+				4905EC9A2164FDBF002E6559 /* PBXTargetDependency */,
 			);
 			name = ClashX;
 			productName = ClashX;
@@ -438,10 +509,21 @@
 		49CF3B1520CD7463001EBF94 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = west2online;
 				TargetAttributes = {
+					4905EC922164FDBF002E6559 = {
+						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.VPNLite = {
+								enabled = 1;
+							};
+						};
+					};
 					495A44BB20D2660A00888A0A = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
@@ -455,8 +537,14 @@
 						CreatedOnToolsVersion = 9.4;
 						LastSwiftMigration = 1000;
 						SystemCapabilities = {
+							com.apple.NetworkExtensions = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 0;
+							};
+							com.apple.VPNLite = {
+								enabled = 1;
 							};
 						};
 					};
@@ -483,6 +571,7 @@
 			targets = (
 				49CF3B1C20CD7463001EBF94 /* ClashX */,
 				495A44BB20D2660A00888A0A /* ClashXLaunchHelper */,
+				4905EC922164FDBF002E6559 /* PacketTunnel */,
 			);
 		};
 /* End PBXProject section */
@@ -498,6 +587,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4905EC912164FDBF002E6559 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495A44BA20D2660A00888A0A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -595,6 +691,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4905EC8F2164FDBF002E6559 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4905EC962164FDBF002E6559 /* PacketTunnelProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495A44B820D2660A00888A0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -613,6 +717,7 @@
 				4997732520D251A60009B136 /* SWBApplication.m in Sources */,
 				49BC061C212931F4005A0FE7 /* AboutViewController.swift in Sources */,
 				4949D154213242F600EF85E6 /* Paths.swift in Sources */,
+				4905ECA32164FE45002E6559 /* VpnManager.swift in Sources */,
 				49B7F9A02157C1DC00484470 /* SpeedTestViewController.swift in Sources */,
 				495340B320DE68C300B0D3FF /* StatusItemView.swift in Sources */,
 				495A44D320D267D000888A0A /* LaunchAtLogin.swift in Sources */,
@@ -641,6 +746,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4905EC9A2164FDBF002E6559 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4905EC922164FDBF002E6559 /* PacketTunnel */;
+			targetProxy = 4905EC992164FDBF002E6559 /* PBXContainerItemProxy */;
+		};
 		495A44CF20D2671F00888A0A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 495A44BB20D2660A00888A0A /* ClashXLaunchHelper */;
@@ -673,6 +783,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4905EC9C2164FDBF002E6559 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MEWHFZ92DY;
+				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.west2online.ClashX.PacketTunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		4905EC9D2164FDBF002E6559 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MEWHFZ92DY;
+				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.west2online.ClashX.PacketTunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 		495A44CA20D2660B00888A0A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -837,7 +990,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5217C006C5A22A1CEA24BFC1 /* Pods-ClashX.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ClashX/ClashX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = MEWHFZ92DY;
@@ -856,9 +1012,10 @@
 					"$(PROJECT_DIR)/ClashX",
 					"$(PROJECT_DIR)/ClashX/clash",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.west2online.ClashX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ClashX/ClashX-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -870,7 +1027,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A1485BCE642059532D01B8BA /* Pods-ClashX.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ClashX/ClashX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = MEWHFZ92DY;
@@ -889,9 +1049,10 @@
 					"$(PROJECT_DIR)/ClashX",
 					"$(PROJECT_DIR)/ClashX/clash",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.west2online.ClashX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ClashX/ClashX-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
@@ -901,6 +1062,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4905EC9E2164FDBF002E6559 /* Build configuration list for PBXNativeTarget "PacketTunnel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4905EC9C2164FDBF002E6559 /* Debug */,
+				4905EC9D2164FDBF002E6559 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		495A44C920D2660B00888A0A /* Build configuration list for PBXNativeTarget "ClashXLaunchHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
