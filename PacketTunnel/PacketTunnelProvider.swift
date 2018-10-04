@@ -7,22 +7,25 @@
 //
 
 import NetworkExtension
+import PacketProcessor
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
         let networkSettings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "8.8.8.8")
-        NSLog("=====> startTunnel")
         setTunnelNetworkSettings(networkSettings) {
             error in
-            print("=====> set")
             guard error == nil else {
                 completionHandler(error)
                 return
             }
             completionHandler(nil)
         }
+    }
+    
+    func setupTun() {
+        Netint
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {

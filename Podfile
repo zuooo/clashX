@@ -10,3 +10,7 @@ target 'ClashX' do
   pod 'WebViewJavascriptBridge', '~> 6.0'
 end
 
+target 'PacketProcessor' do
+  use_frameworks!
+  pod 'CocoaAsyncSocket', '~> 7.4.3'
+end
