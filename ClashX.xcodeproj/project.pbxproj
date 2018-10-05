@@ -2445,6 +2445,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
 							com.apple.VPNLite = {
 								enabled = 1;
 							};

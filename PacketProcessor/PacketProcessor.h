@@ -14,7 +14,7 @@ FOUNDATION_EXPORT double PacketProcessorVersionNumber;
 //! Project version string for PacketProcessor.
 FOUNDATION_EXPORT const unsigned char PacketProcessorVersionString[];
 
-#import "TunnekInterface.h"
+#import "TunnelInterface.h"
 // In this header, you should import all the public headers of your framework using statements like #import <PacketProcessor/PublicHeader.h>
 
 
