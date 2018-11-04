@@ -40,25 +40,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let ssQueue = DispatchQueue(label: "com.w2fzu.ssqueue", attributes: .concurrent)
     var statusItemView:StatusItemView!
     
-    var isRunning = false
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         signal(SIGPIPE, SIG_IGN)
+        
         failLaunchProtect()
+        registCrashLogger()
+        
         _ = ProxyConfigManager.install()
+        ConfigFileFactory.upgardeIniIfNeed()
+        ConfigFileFactory.copySampleConfigIfNeed()
+        
         PFMoveToApplicationsFolderIfNecessary()
-        statusItemView = StatusItemView.create(statusItem: nil,statusMenu: statusMenu)
-        statusItemView.onPopUpMenuAction = {
-            [weak self] in
-            guard let `self` = self else {return}
-            self.syncConfig()
-        }
+        statusItem = NSStatusBar.system.statusItem(withLength:65)
+        statusItem.menu = statusMenu
+
+        statusItemView = StatusItemView.create(statusItem: statusItem)
+        statusMenu.delegate = self
+        
         setupData()
         setupDashboard()
         startProxy()
         updateLoggingLevel()
+        ConfigFileFactory.checkFinalRuleAndShowAlert()
     }
-    
+
+
 
     func applicationWillTerminate(_ aNotification: Notification) {
         if ConfigManager.shared.proxyPortAutoSet {
@@ -83,10 +89,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .showNetSpeedIndicatorObservable
             .bind {[unowned self] (show) in
                 self.showNetSpeedIndicatorMenuItem.state = (show ?? true) ? .on : .off
-                self.statusItem = NSStatusBar.system.statusItem(withLength: (show ?? true) ? 65 : 25)
-                self.statusItem.view = self.statusItemView
+                let statusItemLength:CGFloat = (show ?? true) ? 65 : 25
+                self.statusItem.length = statusItemLength
+                self.statusItemView.frame.size.width = statusItemLength
                 self.statusItemView.showSpeedContainer(show: (show ?? true))
-                self.statusItemView.statusItem = self.statusItem
+                self.statusItemView.updateStatusItemView()
             }.disposed(by: disposeBag)
         
         ConfigManager.shared
@@ -114,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 case .rule:self.proxyModeRuleMenuItem.state = .on
                 }
                 self.allowFromLanMenuItem.state = config!.allowLan ? .on : .off
-                self.proxyModeMenuItem.title = "Proxy Mode (\(config!.mode.rawValue))"
+                self.proxyModeMenuItem.title = "\("Proxy Mode".localized()) (\(config!.mode.rawValue.localized()))"
                 
                 self.updateProxyList()
                 
@@ -126,6 +133,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.socksPortMenuItem.title = "Socks Port:\(config?.socketPort ?? 0)"
                 self.apiPortMenuItem.title = "Api Port:\(ConfigManager.shared.apiPort)"
 
+        }.disposed(by: disposeBag)
+        
+        ConfigManager
+            .shared
+            .isRunningVariable
+            .asObservable()
+            .distinctUntilChanged()
+            .bind { [unowned self] _ in
+                self.updateProxyList()
         }.disposed(by: disposeBag)
         
         LaunchAtLogin.shared
@@ -144,6 +160,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    func registCrashLogger() {
+        func exceptionHandler(exception : NSException) {
+            print(exception)
+            print(exception.callStackSymbols)
+            let str = exception.callStackSymbols.joined(separator: "\n")
+            Logger.log(msg: str, level: .error)
+        }
+        NSSetUncaughtExceptionHandler(exceptionHandler)
+    }
+    
     func failLaunchProtect(){
         let x = UserDefaults.standard
         var launch_fail_times:Int = 0
@@ -154,7 +180,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //发生连续崩溃
             ConfigFileFactory.backupAndRemoveConfigFile()
             try? FileManager.default.removeItem(atPath: kConfigFolderPath + "Country.mmdb")
-            NSUserNotificationCenter.default.post(title: "Fail on launch protect", info: "You origin Config has been rename to config.ini.bak")
+            NSUserNotificationCenter.default.post(title: "Fail on launch protect", info: "You origin Config has been renamed")
         }
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
             x.set(0, forKey: "launch_fail_times")
@@ -185,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateProxyList() {
-        ProxyMenuItemFactory.menuItems { [unowned self] (menus) in
+        func updateProxyList(withMenus menus:[NSMenuItem]) {
             let startIndex = self.statusMenu.items.index(of: self.separatorLineTop)!+1
             let endIndex = self.statusMenu.items.index(of: self.sepatatorLineEndProxySelect)!
             var items = self.statusMenu.items
@@ -201,6 +227,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.statusMenu.insertItem(each, at: 0)
             }
         }
+        
+        if ConfigManager.shared.isRunning {
+            ProxyMenuItemFactory.menuItems { (menus) in
+                updateProxyList(withMenus: menus)
+            }
+            
+        } else {
+            updateProxyList(withMenus: [])
+        }
+        
+        
     }
     
     func updateLoggingLevel() {
@@ -211,16 +248,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func startProxy() {
-        if self.isRunning {return}
-        
-        self.isRunning = true
         print("Trying start proxy")
         if let cstring = run() {
-//            self.isRunning = false
             let error = String(cString: cstring)
             if (error != "success") {
+                ConfigManager.shared.isRunning = false
                 NSUserNotificationCenter.default.postConfigErrorNotice(msg:error)
             } else {
+                ConfigManager.shared.isRunning = true
                 self.resetStreamApi()
                 self.selectOutBoundModeWithMenory()
                 self.selectAllowLanWithMenory()
@@ -241,7 +276,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func resetStreamApi() {
         ApiRequest.shared.requestTrafficInfo(){ [weak self] up,down in
             guard let `self` = self else {return}
-            ((self.statusItem.view) as! StatusItemView).updateSpeedLabel(up: up, down: down)
+            DispatchQueue.main.async {
+                self.statusItemView.updateSpeedLabel(up: up, down: down)
+            }
         }
         
         ApiRequest.shared.requestLog { (type, msg) in
@@ -297,23 +334,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         LaunchAtLogin.shared.isEnabled = !LaunchAtLogin.shared.isEnabled
     }
     
-    var genConfigWindow:NSWindowController?=nil
-    @IBAction func actionGenConfig(_ sender: Any) {
-        let ctrl = PreferencesWindowController(windowNibName: "PreferencesWindowController")
-        
-        
-        genConfigWindow?.close()
-        genConfigWindow=ctrl
-        ctrl.window?.title = ctrl.contentViewController?.title ?? ""
-        ctrl.showWindow(nil)
-        NSApp.activate(ignoringOtherApps: true)
-        ctrl.window?.makeKeyAndOrderFront(self)
-
-    }
     
     @IBAction func openConfigFolder(_ sender: Any) {
-        let path = (NSHomeDirectory() as NSString).appendingPathComponent("/.config/clash")
-        NSWorkspace.shared.openFile(path)
+        NSWorkspace.shared.openFile(kConfigFolderPath)
     }
     
     @IBAction func actionUpdateConfig(_ sender: Any) {
@@ -323,6 +346,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.resetStreamApi()
                 self.selectProxyGroupWithMemory()
                 self.selectOutBoundModeWithMenory()
+                ConfigFileFactory.checkFinalRuleAndShowAlert()
                 NSUserNotificationCenter
                     .default
                     .post(title: "Reload Config Succeed", info: "succees")
@@ -391,14 +415,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func actionShowNetSpeedIndicator(_ sender: NSMenuItem) {
-        ConfigManager.shared.showNetSpeedIndicator = !ConfigManager.shared.showNetSpeedIndicator
+        ConfigManager.shared.showNetSpeedIndicator = !(sender.state == .on)
     }
     
     @IBAction func actionShowLog(_ sender: Any) {
         NSWorkspace.shared.openFile(Logger.shared.logFilePath())
 
     }
-   
+    
 }
 
+extension AppDelegate:NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        self.syncConfig()
+    }
+}
 
