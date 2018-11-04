@@ -31,6 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var separatorLineTop: NSMenuItem!
     @IBOutlet weak var sepatatorLineEndProxySelect: NSMenuItem!
     
+    @IBOutlet weak var enhanceModeMenuItem: NSMenuItem!
+    
     @IBOutlet weak var logLevelMenuItem: NSMenuItem!
     @IBOutlet weak var httpPortMenuItem: NSMenuItem!
     @IBOutlet weak var socksPortMenuItem: NSMenuItem!
@@ -58,7 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusMenu.delegate = self
         
         setupData()
-        setupDashboard()
+        setupDevFunctions()
         startProxy()
         updateLoggingLevel()
         ConfigFileFactory.checkFinalRuleAndShowAlert()
@@ -154,9 +156,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
     }
     
-    func setupDashboard() {
+    func setupDevFunctions() {
         if (!ClashWebViewContoller.enableDashBoard()) {
             statusMenu.removeItem(dashboardMenuItem)
+        }
+        if (UserDefaults.standard.bool(forKey: "kEnableEnhanceMode")) {
+            enhanceModeMenuItem.isHidden = false
         }
     }
     
@@ -246,6 +251,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    func updateEnhanceModeMenuItem() {
+        switch VpnManager.shared.vpnStatus {
+        case .on:
+            enhanceModeMenuItem.state = .on
+        case .off:
+            enhanceModeMenuItem.state = .off
+        default:
+            enhanceModeMenuItem.state = .mixed
+        }
+    }
+    
     
     func startProxy() {
         print("Trying start proxy")
@@ -306,8 +322,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func actionCopyExportCommand(_ sender: Any) {
-        VpnManager.shared.connect()
-        return
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         let port = ConfigManager.shared.currentConfig?.port ?? 0
@@ -318,6 +332,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func actionSpeedTest(_ sender: Any) {
         
     
+    }
+    
+    @IBAction func actionEnhanceMode(_ sender: NSMenuItem) {
+        switch sender.state {
+        case .on:
+            VpnManager.shared.disconnect()
+        case .off:
+            VpnManager.shared.connect()
+        case .mixed:
+            break
+        default:
+            break
+        }
     }
     
     
@@ -427,7 +454,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 extension AppDelegate:NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
-        self.syncConfig()
+        syncConfig()
+        updateEnhanceModeMenuItem()
     }
 }
 

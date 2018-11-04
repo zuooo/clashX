@@ -21,6 +21,7 @@
                         <outlet property="apiPortMenuItem" destination="hwG-qf-DeZ" id="d6K-i7-yCo"/>
                         <outlet property="autoStartMenuItem" destination="B1J-XB-BiZ" id="xaS-h5-qd0"/>
                         <outlet property="dashboardMenuItem" destination="XG6-2M-PNi" id="hzn-77-3Uc"/>
+                        <outlet property="enhanceModeMenuItem" destination="u1N-ZO-GN1" id="tbm-db-VPc"/>
                         <outlet property="httpPortMenuItem" destination="WNw-8Y-VFw" id="ldW-Gw-Q9L"/>
                         <outlet property="logLevelMenuItem" destination="3Da-fL-Mzr" id="ZCW-Il-fOZ"/>
                         <outlet property="proxyModeDirectMenuItem" destination="Np6-Pm-Lo3" id="DER-K7-DNW"/>
@@ -75,6 +76,12 @@
                             <connections>
                                 <action selector="actionSpeedTest:" target="Voe-Tx-rLC" id="deV-3n-Mtx"/>
                                 <segue destination="gtD-dn-7Dy" kind="show" id="opl-HQ-q26"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Enhance Mode(dev)" hidden="YES" id="u1N-ZO-GN1">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="actionEnhanceMode:" target="Voe-Tx-rLC" id="Mmc-ab-Khc"/>
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="nXl-3B-Q18"/>
