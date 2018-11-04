@@ -10,8 +10,8 @@ import NetworkExtension
 import PacketProcessor
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    let proxyPort = 7900
-    let socksPort:Int32 = 7991
+    let proxyPort = 7890
+    let socksPort:Int32 = 7891
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
@@ -26,14 +26,23 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler(error)
                 return
             }
+            guard self.setupClash() else {exit(0)}
             self.setupTun()
             completionHandler(nil)
+            self.loop()
+        }
+    }
+    
+    func loop() {
+        print("loop")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.loop()
         }
     }
     
     func generateNetworkSetting() -> NEPacketTunnelNetworkSettings {
         let networkSettings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "8.8.8.8")
-        networkSettings.mtu = 1500
+        networkSettings.mtu = 1400
         let ipv4Settings = NEIPv4Settings(addresses: ["192.169.89.1"], subnetMasks: ["255.255.255.0"])
         ipv4Settings.includedRoutes = [NEIPv4Route.default()]
         ipv4Settings.excludedRoutes = [
@@ -47,6 +56,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         ]
         networkSettings.ipv4Settings = ipv4Settings
         
+        networkSettings.dnsSettings = NEDNSSettings(servers: ["114.114.114.114"])
+        
         let proxySettings = NEProxySettings()
         proxySettings.httpEnabled = true
         proxySettings.httpServer = NEProxyServer(address: "127.0.0.1", port: proxyPort)
@@ -57,11 +68,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         proxySettings.matchDomains = [""]
         proxySettings.exceptionList = ["api.smoot.apple.com","configuration.apple.com","xp.apple.com","smp-device-content.apple.com","guzzoni.apple.com","captive.apple.com","*.ess.apple.com","*.push.apple.com","*.push-apple.com.akadns.net"]
         networkSettings.proxySettings = proxySettings
-        
+//
         
         return networkSettings
     }
 
+    func setupClash() -> Bool {
+        run()
+        return true
+    }
     
     func setupTun() {
         TunnelInterface.startTun2Socks(socksPort)

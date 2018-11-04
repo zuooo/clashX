@@ -61,9 +61,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         setupData()
         setupDevFunctions()
-        startProxy()
-        updateLoggingLevel()
-        ConfigFileFactory.checkFinalRuleAndShowAlert()
+//        startProxy()
+//        updateLoggingLevel()
+//        ConfigFileFactory.checkFinalRuleAndShowAlert()
     }
 
 
