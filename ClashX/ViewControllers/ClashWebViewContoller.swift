@@ -55,7 +55,7 @@ class ClashWebViewContoller: NSViewController {
             view.addConstraint(constraint)
         }
 
-        bridge = JsBridgeHelper.initJSbridge(webview: webview, delegate: self)
+        bridge = JsBridgeUtil.initJSbridge(webview: webview, delegate: self)
         registerExtenalJSBridgeFunction()
 
         webview.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
@@ -65,9 +65,16 @@ class ClashWebViewContoller: NSViewController {
             self?.bridge?.callHandler("onConfigChange")
             }.disposed(by: disposeBag)
 
+        loadWebRecourses()
+    }
+    
+    func loadWebRecourses() {
         // defaults write com.west2online.ClashX webviewUrl "your url"
-        let url = UserDefaults.standard.string(forKey: "webviewUrl") ?? "http://127.0.0.1:8080"
-        self.webview.load(URLRequest(url: URL(string: url)!))
+        let defaultUrl = "\(ConfigManager.apiUrl)/ui/"
+        let url = UserDefaults.standard.string(forKey: "webviewUrl") ?? defaultUrl
+        if let url = URL(string: url) {
+            webview.load(URLRequest(url: url))
+        }
     }
     
     override func viewWillAppear() {
@@ -83,20 +90,33 @@ class ClashWebViewContoller: NSViewController {
         view.window?.backgroundColor = NSColor.clear
         view.window?.styleMask.remove(.resizable)
         view.window?.styleMask.remove(.miniaturizable)
+        
+        if NSApp.activationPolicy() == .accessory {
+            NSApp.setActivationPolicy(.regular)
+        }
     }
+    
+    deinit {
+        NSApp.setActivationPolicy(.accessory)
+    }
+    
+
+    
     
 }
 
 extension ClashWebViewContoller {
     func registerExtenalJSBridgeFunction(){
-        self.bridge?.registerHandler("setDragAreaHeight") {(anydata, responseCallback) in
+        self.bridge?.registerHandler("setDragAreaHeight") {
+            [weak self] (anydata, responseCallback) in
             if let height = anydata as? CGFloat {
-                self.webview.dragableAreaHeight = height;
+                self?.webview.dragableAreaHeight = height;
             }
             responseCallback?(nil)
         }
     }
 }
+
 
 extension ClashWebViewContoller:WKUIDelegate,WKNavigationDelegate {
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
@@ -125,7 +145,9 @@ extension ClashWebViewContoller:WKUIDelegate,WKNavigationDelegate {
     }
     
 }
-
+extension ClashWebViewContoller:WebResourceLoadDelegate {
+    
+}
 
 class CustomWKWebView: WKWebView {
     

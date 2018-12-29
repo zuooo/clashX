@@ -10,7 +10,6 @@
 		0D318CDAC9464E01DAD1F92B /* Pods_ClashX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358BF8F0CBD7FF9A7EA4E30 /* Pods_ClashX.framework */; };
 		4905EC962164FDBF002E6559 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4905EC952164FDBF002E6559 /* PacketTunnelProvider.swift */; };
 		4905EC9B2164FDBF002E6559 /* PacketTunnel.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4905EC932164FDBF002E6559 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4905ECA32164FE45002E6559 /* VpnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4905ECA22164FE45002E6559 /* VpnManager.swift */; };
 		4905ECA62164FF34002E6559 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4905ECA52164FF34002E6559 /* NetworkExtension.framework */; };
 		4905ECA72165003B002E6559 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4905ECA52164FF34002E6559 /* NetworkExtension.framework */; };
 		4913C82321157D0200F6B87C /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913C82221157D0200F6B87C /* Notification.swift */; };
@@ -21,14 +20,15 @@
 		493196A2216331F400A8E6E7 /* NetworkChangeNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493196A1216331F400A8E6E7 /* NetworkChangeNotifier.swift */; };
 		4949D154213242F600EF85E6 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4949D153213242F600EF85E6 /* Paths.swift */; };
 		4949D15D2132614B00EF85E6 /* QRCodeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4949D15C2132614B00EF85E6 /* QRCodeUtil.swift */; };
-		4952C3BF2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952C3BE2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift */; };
+		4952C3BF2115C7CA004A4FA8 /* MenuItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952C3BE2115C7CA004A4FA8 /* MenuItemFactory.swift */; };
 		4952C3CE2116EA2E004A4FA8 /* ProxyServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952C3CD2116EA2E004A4FA8 /* ProxyServerModel.swift */; };
-		4952C3D02117027C004A4FA8 /* ConfigFileFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952C3CF2117027C004A4FA8 /* ConfigFileFactory.swift */; };
+		4952C3D02117027C004A4FA8 /* ConfigFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952C3CF2117027C004A4FA8 /* ConfigFileManager.swift */; };
 		495340B020DE5F7200B0D3FF /* StatusItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 495340AF20DE5F7200B0D3FF /* StatusItemView.xib */; };
 		495340B320DE68C300B0D3FF /* StatusItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495340B220DE68C300B0D3FF /* StatusItemView.swift */; };
 		495A44BF20D2660A00888A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A44BE20D2660A00888A0A /* AppDelegate.swift */; };
 		495A44CD20D266BA00888A0A /* ClashXLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 495A44BC20D2660A00888A0A /* ClashXLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		495A44D320D267D000888A0A /* LaunchAtLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A44D220D267D000888A0A /* LaunchAtLogin.swift */; };
+		495BFB8821919B9800C8779D /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495BFB8721919B9800C8779D /* RemoteConfigManager.swift */; };
 		495DC0522165D656006F9637 /* PacketProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 495DC0502165D656006F9637 /* PacketProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		495DC0552165D656006F9637 /* PacketProcessor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 495DC04E2165D655006F9637 /* PacketProcessor.framework */; };
 		495DC0562165D656006F9637 /* PacketProcessor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 495DC04E2165D655006F9637 /* PacketProcessor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -448,6 +448,7 @@
 		495DC70F2165D9F2006F9637 /* PacketProcessor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 495DC04E2165D655006F9637 /* PacketProcessor.framework */; };
 		495DC712216655C5006F9637 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 495DC711216655C5006F9637 /* libresolv.tbd */; };
 		4960A6DB2136529200B940C9 /* JSBridgeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960A6DA2136529200B940C9 /* JSBridgeHandler.swift */; };
+		4965635821D71AE400F370B1 /* VpnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4965635721D71AE400F370B1 /* VpnManager.swift */; };
 		4966E9E32118153A00A391FB /* NSUserNotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E9E22118153A00A391FB /* NSUserNotificationCenter+Extension.swift */; };
 		4966E9E6211824F300A391FB /* NSImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E9E5211824F300A391FB /* NSImage+extension.swift */; };
 		496BDEE021196F1E00C5207F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496BDEDF21196F1E00C5207F /* Logger.swift */; };
@@ -458,6 +459,7 @@
 		49722FF2211F338B00650A41 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49722FEE211F338B00650A41 /* Info.plist */; };
 		4975E121217A12210027708D /* ProxyMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4975E120217A12210027708D /* ProxyMenuItemView.swift */; };
 		4975E123217A122E0027708D /* ProxyMenuItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4975E122217A122E0027708D /* ProxyMenuItemView.xib */; };
+		49761DA721C9497000AE13EF /* dashboard in Resources */ = {isa = PBXBuildFile; fileRef = 49761DA621C9497000AE13EF /* dashboard */; };
 		497F0DF320DE2FE50077AD41 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 497F0DF220DE2FE50077AD41 /* Icon.icns */; };
 		4981C88B216BAE4A008CC14A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4981C88D216BAE4A008CC14A /* Localizable.strings */; };
 		4981C890216BAF0C008CC14A /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4981C88F216BAF0C008CC14A /* String+Localized.swift */; };
@@ -467,12 +469,11 @@
 		4997732520D251A60009B136 /* SWBApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4997732320D251A60009B136 /* SWBApplication.m */; };
 		499976C821359F0400E7BF83 /* ClashWebViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499976C721359F0400E7BF83 /* ClashWebViewContoller.swift */; };
 		49B1086A216A356D0064FFCE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B10869216A356D0064FFCE /* String+Extension.swift */; };
-		49B7F9A02157C1DC00484470 /* SpeedTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B7F99F2157C1DC00484470 /* SpeedTestViewController.swift */; };
 		49BC061C212931F4005A0FE7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC061B212931F4005A0FE7 /* AboutViewController.swift */; };
 		49CF3B2120CD7463001EBF94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF3B2020CD7463001EBF94 /* AppDelegate.swift */; };
 		49CF3B2520CD7465001EBF94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49CF3B2420CD7465001EBF94 /* Assets.xcassets */; };
 		49CF3B2820CD7465001EBF94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49CF3B2620CD7465001EBF94 /* Main.storyboard */; };
-		49CF3B5C20CE8068001EBF94 /* ProxyConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF3B5B20CE8068001EBF94 /* ProxyConfigManager.swift */; };
+		49CF3B5C20CE8068001EBF94 /* ProxyConfigHelperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF3B5B20CE8068001EBF94 /* ProxyConfigHelperManager.swift */; };
 		49CF3B5F20CE80D2001EBF94 /* install_proxy_helper.sh in Resources */ = {isa = PBXBuildFile; fileRef = 49CF3B5E20CE80D2001EBF94 /* install_proxy_helper.sh */; };
 		49CF3B6320CED9CF001EBF94 /* check_proxy_helper.sh in Resources */ = {isa = PBXBuildFile; fileRef = 49CF3B6220CED934001EBF94 /* check_proxy_helper.sh */; };
 		49CF3B6520CEE06C001EBF94 /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF3B6420CEE06C001EBF94 /* ConfigManager.swift */; };
@@ -570,7 +571,6 @@
 		4905EC952164FDBF002E6559 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4905EC972164FDBF002E6559 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4905EC982164FDBF002E6559 /* PacketTunnel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PacketTunnel.entitlements; sourceTree = "<group>"; };
-		4905ECA22164FE45002E6559 /* VpnManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
 		4905ECA52164FF34002E6559 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		4913C82221157D0200F6B87C /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		492C4868210EE6B9004554A0 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
@@ -581,9 +581,9 @@
 		493196A1216331F400A8E6E7 /* NetworkChangeNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkChangeNotifier.swift; sourceTree = "<group>"; };
 		4949D153213242F600EF85E6 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		4949D15C2132614B00EF85E6 /* QRCodeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeUtil.swift; sourceTree = "<group>"; };
-		4952C3BE2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyMenuItemFactory.swift; sourceTree = "<group>"; };
+		4952C3BE2115C7CA004A4FA8 /* MenuItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemFactory.swift; sourceTree = "<group>"; };
 		4952C3CD2116EA2E004A4FA8 /* ProxyServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerModel.swift; sourceTree = "<group>"; };
-		4952C3CF2117027C004A4FA8 /* ConfigFileFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigFileFactory.swift; sourceTree = "<group>"; };
+		4952C3CF2117027C004A4FA8 /* ConfigFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigFileManager.swift; sourceTree = "<group>"; };
 		495340AF20DE5F7200B0D3FF /* StatusItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusItemView.xib; sourceTree = "<group>"; };
 		495340B220DE68C300B0D3FF /* StatusItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemView.swift; sourceTree = "<group>"; };
 		495A44BC20D2660A00888A0A /* ClashXLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClashXLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -591,6 +591,7 @@
 		495A44C720D2660B00888A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		495A44C820D2660B00888A0A /* ClashXLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClashXLaunchHelper.entitlements; sourceTree = "<group>"; };
 		495A44D220D267D000888A0A /* LaunchAtLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLogin.swift; sourceTree = "<group>"; };
+		495BFB8721919B9800C8779D /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		495DC04E2165D655006F9637 /* PacketProcessor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PacketProcessor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		495DC0502165D656006F9637 /* PacketProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PacketProcessor.h; sourceTree = "<group>"; };
 		495DC0512165D656006F9637 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1010,6 +1011,7 @@
 		495DC5712165D8DF006F9637 /* PacketProtoFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketProtoFlow.h; sourceTree = "<group>"; };
 		495DC711216655C5006F9637 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4960A6DA2136529200B940C9 /* JSBridgeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSBridgeHandler.swift; sourceTree = "<group>"; };
+		4965635721D71AE400F370B1 /* VpnManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
 		4966E9E22118153A00A391FB /* NSUserNotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserNotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		4966E9E5211824F300A391FB /* NSImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+extension.swift"; sourceTree = "<group>"; };
 		496BDEDF21196F1E00C5207F /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 		49722FEE211F338B00650A41 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4975E120217A12210027708D /* ProxyMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProxyMenuItemView.swift; path = /Users/yicheng/Code/clashX/ClashX/Views/ProxyMenuItemView.swift; sourceTree = "<absolute>"; };
 		4975E122217A122E0027708D /* ProxyMenuItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProxyMenuItemView.xib; sourceTree = "<group>"; };
+		49761DA621C9497000AE13EF /* dashboard */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dashboard; sourceTree = "<group>"; };
 		497F0DF220DE2FE50077AD41 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		4981C887216BAB8A008CC14A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		4981C888216BAB8A008CC14A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "../zh-Hans.lproj/Main.storyboard"; sourceTree = "<group>"; };
@@ -1034,7 +1037,6 @@
 		4997732420D251A60009B136 /* SWBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWBApplication.h; sourceTree = "<group>"; };
 		499976C721359F0400E7BF83 /* ClashWebViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClashWebViewContoller.swift; sourceTree = "<group>"; };
 		49B10869216A356D0064FFCE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		49B7F99F2157C1DC00484470 /* SpeedTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTestViewController.swift; sourceTree = "<group>"; };
 		49BC061B212931F4005A0FE7 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		49BC061E2129A34D005A0FE7 /* appcast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = appcast.xml; sourceTree = "<group>"; };
 		49CF3B1D20CD7463001EBF94 /* ClashX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClashX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1045,7 +1047,7 @@
 		49CF3B2A20CD7465001EBF94 /* ClashX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClashX.entitlements; sourceTree = "<group>"; };
 		49CF3B3520CD75DF001EBF94 /* ClashX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClashX-Bridging-Header.h"; sourceTree = "<group>"; };
 		49CF3B4B20CE5232001EBF94 /* ProxyConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProxyConfig.xcodeproj; path = ProxyConfig/ProxyConfig.xcodeproj; sourceTree = "<group>"; };
-		49CF3B5B20CE8068001EBF94 /* ProxyConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyConfigManager.swift; sourceTree = "<group>"; };
+		49CF3B5B20CE8068001EBF94 /* ProxyConfigHelperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyConfigHelperManager.swift; sourceTree = "<group>"; };
 		49CF3B5E20CE80D2001EBF94 /* install_proxy_helper.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_proxy_helper.sh; sourceTree = "<group>"; };
 		49CF3B6220CED934001EBF94 /* check_proxy_helper.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_proxy_helper.sh; sourceTree = "<group>"; };
 		49CF3B6420CEE06C001EBF94 /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
@@ -1116,18 +1118,42 @@
 			path = Macro;
 			sourceTree = "<group>";
 		};
+		491C24FF21BD558B00AB5D44 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4966E9E22118153A00A391FB /* NSUserNotificationCenter+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		491C250021BD55B900AB5D44 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4949D15C2132614B00EF85E6 /* QRCodeUtil.swift */,
+				4960A6DA2136529200B940C9 /* JSBridgeHandler.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		491C250121BD561200AB5D44 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4965635721D71AE400F370B1 /* VpnManager.swift */,
+				4952C3CF2117027C004A4FA8 /* ConfigFileManager.swift */,
+				49CF3B5B20CE8068001EBF94 /* ProxyConfigHelperManager.swift */,
+				49CF3B6420CEE06C001EBF94 /* ConfigManager.swift */,
+				495BFB8721919B9800C8779D /* RemoteConfigManager.swift */,
+				4952C3BE2115C7CA004A4FA8 /* MenuItemFactory.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		492C4866210EE69B004554A0 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				4905ECA22164FE45002E6559 /* VpnManager.swift */,
-				4966E9E22118153A00A391FB /* NSUserNotificationCenter+Extension.swift */,
+				491C250121BD561200AB5D44 /* Managers */,
+				491C250021BD55B900AB5D44 /* Utils */,
 				492C4868210EE6B9004554A0 /* ApiRequest.swift */,
-				4952C3BE2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift */,
-				4952C3CF2117027C004A4FA8 /* ConfigFileFactory.swift */,
-				49CF3B5B20CE8068001EBF94 /* ProxyConfigManager.swift */,
-				49CF3B6420CEE06C001EBF94 /* ConfigManager.swift */,
-				4949D15C2132614B00EF85E6 /* QRCodeUtil.swift */,
-				4960A6DA2136529200B940C9 /* JSBridgeHandler.swift */,
 				4931969A21631E5D00A8E6E7 /* SpeedDataRecorder.swift */,
 			);
 			path = General;
@@ -1866,11 +1892,19 @@
 			path = Witness;
 			sourceTree = "<group>";
 		};
+		49761DA521C9490400AE13EF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				49761DA621C9497000AE13EF /* dashboard */,
+				49CF3B5D20CE80D2001EBF94 /* script */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		4989F98520D0AA300001E564 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				49BC061B212931F4005A0FE7 /* AboutViewController.swift */,
-				49B7F99F2157C1DC00484470 /* SpeedTestViewController.swift */,
 				499976C721359F0400E7BF83 /* ClashWebViewContoller.swift */,
 			);
 			path = ViewControllers;
@@ -1922,10 +1956,11 @@
 				4913C82021157CEB00F6B87C /* Macro */,
 				4997732220D251A60009B136 /* Basic */,
 				492C486E210EF621004554A0 /* Models */,
+				491C24FF21BD558B00AB5D44 /* Extensions */,
 				492C4866210EE69B004554A0 /* General */,
 				4931969C21631F2E00A8E6E7 /* Views */,
 				4989F98520D0AA300001E564 /* ViewControllers */,
-				49CF3B5D20CE80D2001EBF94 /* script */,
+				49761DA521C9490400AE13EF /* Resources */,
 				49CF3B4B20CE5232001EBF94 /* ProxyConfig.xcodeproj */,
 				49CF3B3A20CD783A001EBF94 /* Support Files */,
 				49CF3B2020CD7463001EBF94 /* AppDelegate.swift */,
@@ -2417,6 +2452,7 @@
 				663E4677213FCDC4006F11BB /* CopyFiles */,
 				4905EC9F2164FDBF002E6559 /* Embed App Extensions */,
 				495DC05A2165D656006F9637 /* Embed Frameworks */,
+				4965635421D7193600F370B1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2551,6 +2587,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49761DA721C9497000AE13EF /* dashboard in Resources */,
 				49CF3B2520CD7465001EBF94 /* Assets.xcassets in Resources */,
 				4981C88B216BAE4A008CC14A /* Localizable.strings in Resources */,
 				495340B020DE5F7200B0D3FF /* StatusItemView.xib in Resources */,
@@ -2604,6 +2641,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4965635421D7193600F370B1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" e5990c61f53f0e5713e37f78458291760d631147 cf9c0c3d1632310f1e08fc6e07aedd6076855b99d2a08f9ff586c2894ae1602e\n";
+		};
 		A741C26F5755233F0D7CEC6F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2614,9 +2669,11 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/LetsMove/LetsMove.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViewJavascriptBridge/WebViewJavascriptBridge.framework",
 				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
@@ -2627,9 +2684,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LetsMove.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViewJavascriptBridge.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
@@ -2726,14 +2785,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49CF3B5C20CE8068001EBF94 /* ProxyConfigManager.swift in Sources */,
-				4952C3D02117027C004A4FA8 /* ConfigFileFactory.swift in Sources */,
+				49CF3B5C20CE8068001EBF94 /* ProxyConfigHelperManager.swift in Sources */,
+				4952C3D02117027C004A4FA8 /* ConfigFileManager.swift in Sources */,
 				493196A2216331F400A8E6E7 /* NetworkChangeNotifier.swift in Sources */,
 				4997732520D251A60009B136 /* SWBApplication.m in Sources */,
 				49BC061C212931F4005A0FE7 /* AboutViewController.swift in Sources */,
 				4949D154213242F600EF85E6 /* Paths.swift in Sources */,
-				4905ECA32164FE45002E6559 /* VpnManager.swift in Sources */,
-				49B7F9A02157C1DC00484470 /* SpeedTestViewController.swift in Sources */,
 				495340B320DE68C300B0D3FF /* StatusItemView.swift in Sources */,
 				495A44D320D267D000888A0A /* LaunchAtLogin.swift in Sources */,
 				49CF3B2120CD7463001EBF94 /* AppDelegate.swift in Sources */,
@@ -2744,15 +2801,17 @@
 				492C4871210EF62E004554A0 /* ClashConfig.swift in Sources */,
 				492C4869210EE6B9004554A0 /* ApiRequest.swift in Sources */,
 				49CF3B6520CEE06C001EBF94 /* ConfigManager.swift in Sources */,
+				495BFB8821919B9800C8779D /* RemoteConfigManager.swift in Sources */,
 				49722FF1211F338B00650A41 /* Witness.swift in Sources */,
 				49722FF0211F338B00650A41 /* EventStream.swift in Sources */,
-				4952C3BF2115C7CA004A4FA8 /* ProxyMenuItemFactory.swift in Sources */,
+				4952C3BF2115C7CA004A4FA8 /* MenuItemFactory.swift in Sources */,
 				4966E9E32118153A00A391FB /* NSUserNotificationCenter+Extension.swift in Sources */,
 				4931969B21631E5E00A8E6E7 /* SpeedDataRecorder.swift in Sources */,
 				499976C821359F0400E7BF83 /* ClashWebViewContoller.swift in Sources */,
 				4981C890216BAF0C008CC14A /* String+Localized.swift in Sources */,
 				49722FE4211ED56C00650A41 /* parseINI.swift in Sources */,
 				4966E9E6211824F300A391FB /* NSImage+extension.swift in Sources */,
+				4965635821D71AE400F370B1 /* VpnManager.swift in Sources */,
 				4952C3CE2116EA2E004A4FA8 /* ProxyServerModel.swift in Sources */,
 				4975E121217A12210027708D /* ProxyMenuItemView.swift in Sources */,
 				49B1086A216A356D0064FFCE /* String+Extension.swift in Sources */,

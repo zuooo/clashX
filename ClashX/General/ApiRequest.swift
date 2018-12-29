@@ -59,19 +59,25 @@ class ApiRequest{
     
     
     static func requestConfigUpdate(callback:@escaping ((String?)->())){
-        if let errMSg = updateAllConfig() {
-            let err = String(cString: errMSg)
-            let success = (err == "")
-            ConfigManager.shared.isRunning = success
-            callback(success ? nil : err)
-        } else {
-            callback("unknown error")
+        let filePath = "\(kConfigFolderPath)\(ConfigManager.selectConfigName).yml"
+        
+        req("/configs", method: .put,parameters: ["Path":filePath],encoding: JSONEncoding.default).responseJSON {res in
+            if (res.response?.statusCode == 204) {
+                ConfigManager.shared.isRunning = true
+                callback(nil)
+            } else {
+                let err = JSON(res.result.value as Any)["message"].string ?? "Error occoured, Please try to fix it by restarting ClashX. "
+                if err.contains("no such file or directory") {
+                    ConfigManager.selectConfigName = "config"
+                } else {
+                    callback(err)
+                }
+            }
         }
-        req("/configs", method: .put).responseJSON {_ in}
     }
     
     static func updateOutBoundMode(mode:ClashProxyMode, callback:@escaping ((Bool)->())) {
-        req("/configs", method: .put, parameters: ["mode":mode.rawValue], encoding: JSONEncoding.default)
+        req("/configs", method: .patch, parameters: ["mode":mode.rawValue], encoding: JSONEncoding.default)
             .responseJSON{ response in
             switch response.result {
             case .success(_):
@@ -92,7 +98,7 @@ class ApiRequest{
     
     static func updateAllowLan(allow:Bool,completeHandler:@escaping (()->())) {
         req("/configs",
-            method: .put,
+            method: .patch,
             parameters: ["allow-lan":allow],
             encoding: JSONEncoding.default).response{
             _ in
@@ -114,13 +120,10 @@ class ApiRequest{
     static func getAllProxyList(callback:@escaping (([String])->())) {
         requestProxyGroupList { (groups) in
             let lists:[String] = groups["GLOBAL"]?["all"] as? [String] ?? []
-            var proxyList = [String]()
-            for proxy in lists {
-                if ["Shadowsocks","Vmess"] .contains(groups[proxy]?["type"] as? String ?? ""){
-                    proxyList.append(proxy)
-                }
-            }
-            callback(proxyList)
+            .filter({
+                ["Shadowsocks","Vmess","Socks5","Http"] .contains(groups[$0]?["type"] as? String ?? "")
+            })
+            callback(lists)
         }
     }
     
@@ -163,8 +166,9 @@ extension ApiRequest {
                     if let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String:Int] {
                         callback(jsonData?["up"] ?? 0, jsonData?["down"] ?? 0)
                     }
-                }.response { res in
+                }.response {[weak self] res in
                     guard let err = res.error else {return}
+                    guard let self = self else {return}
                     if (err as NSError).code != -999 {
                         Logger.log(msg: "Traffic Api.\(err.localizedDescription)")
                         // delay 1s,prevent recursive
@@ -195,8 +199,9 @@ extension ApiRequest {
                         callback(type,payload)
                     }
                 }
-                .response { res in
+                .response { [weak self] res in
                     guard let err = res.error else {return}
+                    guard let self = self else {return}
                     if (err as NSError).code != -999 {
                         Logger.log(msg: "Loging api disconnected.\(err.localizedDescription)")
                         // delay 1s,prevent recursive
