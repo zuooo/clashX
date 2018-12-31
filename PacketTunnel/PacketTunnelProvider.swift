@@ -10,11 +10,22 @@ import NetworkExtension
 import PacketProcessor
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    let proxyPort = 7900
-    let socksPort:Int32 = 7991
+    var proxyPort = 0
+    var socksPort:Int32 = 0
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
+        
+        guard let options = options else {exit(0)}
+        guard let port = options["proxyPort"] as? Int,
+        let socks = options["socksPort"] as? Int
+            else {
+            exit(0)
+        }
+        self.proxyPort = port
+        self.socksPort = Int32(socks)
+        
+        
         let error =  TunnelInterface.setup(with: self.packetFlow)
         if ((error) != nil) {completionHandler(error!)
             exit(1)
@@ -33,9 +44,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     func generateNetworkSetting() -> NEPacketTunnelNetworkSettings {
         let networkSettings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "8.8.8.8")
-        networkSettings.mtu = 1500
+        networkSettings.mtu = 1400
         let ipv4Settings = NEIPv4Settings(addresses: ["192.169.89.1"], subnetMasks: ["255.255.255.0"])
-        ipv4Settings.includedRoutes = [NEIPv4Route.default()]
+        ipv4Settings.includedRoutes = [
+            NEIPv4Route(destinationAddress: "198.18.0.0", subnetMask: "255.255.0.0"),
+        ]
+        
         ipv4Settings.excludedRoutes = [
             NEIPv4Route(destinationAddress: "10.0.0.0", subnetMask: "255.0.0.0"),
             NEIPv4Route(destinationAddress: "100.64.0.0", subnetMask: "255.192.0.0"),
@@ -43,7 +57,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             NEIPv4Route(destinationAddress: "169.254.0.0", subnetMask: "255.255.0.0"),
             NEIPv4Route(destinationAddress: "172.16.0.0", subnetMask: "255.240.0.0"),
             NEIPv4Route(destinationAddress: "192.168.0.0", subnetMask: "255.255.0.0"),
-            NEIPv4Route(destinationAddress: "114.114.114.114", subnetMask: "255.255.255.255"),
         ]
         networkSettings.ipv4Settings = ipv4Settings
         
@@ -56,8 +69,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // This will match all domains
         proxySettings.matchDomains = [""]
         proxySettings.exceptionList = ["api.smoot.apple.com","configuration.apple.com","xp.apple.com","smp-device-content.apple.com","guzzoni.apple.com","captive.apple.com","*.ess.apple.com","*.push.apple.com","*.push-apple.com.akadns.net"]
-        networkSettings.proxySettings = proxySettings
+//        networkSettings.proxySettings = proxySettings
         
+        let dnsSetting = NEDNSSettings(servers: ["127.0.0.1"])
+        
+        networkSettings.dnsSettings = dnsSetting
         
         return networkSettings
     }

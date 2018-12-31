@@ -141,11 +141,11 @@ extension VpnManager{
 
 // Actions
 extension VpnManager{
-    func connect(){
+    func connect(options:[String:NSObject] = [:]){
         self.loadAndCreatePrividerManager { (manager) in
             guard let manager = manager else{return}
             do{
-                try manager.connection.startVPNTunnel(options: [:])
+                try manager.connection.startVPNTunnel(options: options)
             }catch let err{
                 print(err)
             }

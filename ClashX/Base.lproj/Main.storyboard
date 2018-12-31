@@ -72,8 +72,7 @@
                                 <action selector="actionCopyExportCommand:" target="Voe-Tx-rLC" id="82r-sY-7xb"/>
                             </connections>
                         </menuItem>
-                       
-                        <menuItem title="Enhance Mode(dev)" hidden="YES" id="u1N-ZO-GN1">
+                        <menuItem title="Enhance Mode(dev)" id="u1N-ZO-GN1">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="actionEnhanceMode:" target="Voe-Tx-rLC" id="Mmc-ab-Khc"/>

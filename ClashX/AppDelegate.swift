@@ -56,8 +56,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusMenu.delegate = self
         
         // crash recorder
-        failLaunchProtect()
-        registCrashLogger()
+        if !isDebug() {
+            failLaunchProtect()
+            registCrashLogger()
+        }
+     
         
         // prepare for launch
         ConfigFileManager.upgardeIniIfNeed()
@@ -226,6 +229,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    
     func updateEnhanceModeMenuItem() {
         switch VpnManager.shared.vpnStatus {
         case .on:
@@ -270,10 +274,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func syncConfig(completeHandler:(()->())? = nil){
         ApiRequest.requestConfig{ (config) in
-            guard config.port > 0 else {return}
             ConfigManager.shared.currentConfig = config
             completeHandler?()
         }
+
+
     }
     
     func resetStreamApi() {
@@ -355,17 +360,17 @@ extension AppDelegate {
         pasteboard.setString("export https_proxy=http://127.0.0.1:\(port);export http_proxy=http://127.0.0.1:\(port);export all_proxy=socks5://127.0.0.1:\(socksport)", forType: .string)
     }
     
-    @IBAction func actionSpeedTest(_ sender: Any) {
-        
-        
-    }
 
-      @IBAction func actionEnhanceMode(_ sender: NSMenuItem) {
+    @IBAction func actionEnhanceMode(_ sender: NSMenuItem) {
         switch sender.state {
         case .on:
             VpnManager.shared.disconnect()
         case .off:
-            VpnManager.shared.connect()
+            guard let  config = ConfigManager.shared.currentConfig else {return}
+            VpnManager.shared.connect(options: [
+                "proxyPort":config.port as NSObject,
+                "socksPort":config.socketPort as NSObject
+                ])
         case .mixed:
             break
         default:
@@ -525,6 +530,10 @@ extension AppDelegate {
 // MARK: NSMenuDelegate
 extension AppDelegate:NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
+        
+    }
+    
+    func menuNeedsUpdate(_ menu: NSMenu) {
         syncConfig()
         updateEnhanceModeMenuItem()
     }
