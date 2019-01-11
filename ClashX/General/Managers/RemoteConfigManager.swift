@@ -58,7 +58,7 @@ class RemoteConfigManager: NSObject {
         }
     }
     
-    static func updateConfigIfNeed() {
+    static func updateConfigIfNeed(complete:((String?)->())?=nil) {
         getRemoteConfigString { (host,string) in
             guard let newConfigString = string else {alert(with: "Download fail"); return}
             
@@ -68,16 +68,29 @@ class RemoteConfigManager: NSObject {
                 if fm.fileExists(atPath: savePath) {
                     let current = try String(contentsOfFile: savePath)
                     if current == newConfigString {
-                        self.alert(with: "No Update needed!")
+                        if let complete = complete {
+                            complete(nil)
+                        } else {
+                            self.alert(with: "配置无需更新")
+                        }
+                        return
                     }
                     try fm.removeItem(atPath: savePath)
                 }
                 try newConfigString.write(toFile: savePath, atomically: true, encoding: .utf8)
                 ConfigManager.selectConfigName = host
                 NotificationCenter.default.post(Notification(name: kShouldUpDateConfig))
-                self.alert(with: "Update Success!")
+                if let complete = complete {
+                    complete(nil)
+                } else {
+                    self.alert(with: "配置更新成功")
+                }
             } catch let err {
-                self.alert(with: err.localizedDescription)
+                if let complete = complete {
+                    complete(err.localizedDescription)
+                } else {
+                    self.alert(with: err.localizedDescription)
+                }
             }
 
         }

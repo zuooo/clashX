@@ -40,6 +40,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var socksPortMenuItem: NSMenuItem!
     @IBOutlet weak var apiPortMenuItem: NSMenuItem!
     
+    @IBOutlet weak var webPortalMenuItem: NSMenuItem!
+    
     var disposeBag = DisposeBag()
     var statusItemView:StatusItemView!
     
@@ -274,6 +276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             Logger.log(msg: msg,level: ClashLogLevel(rawValue: type) ?? .unknow)
         }
     }
+
     
 }
 
@@ -446,7 +449,7 @@ extension AppDelegate {
 // MARK: crash hanlder
 extension AppDelegate {
     func registCrashLogger() {
-        Fabric.with([Crashlytics.self])
+//        Fabric.with([Crashlytics.self])
     }
     
     func failLaunchProtect(){
@@ -495,6 +498,28 @@ extension AppDelegate {
     }
 }
 
+// MARK: Webprotal
+extension AppDelegate {
+    func updateWebProtalMenu() {
+        if WebPortalManager.shared.isLogin {
+            webPortalMenuItem.title = "DlerCloud已登录"
+            let submenu = NSMenu(title: "DlerCloud已登录")
+            submenu.items = WebPortalManager.shared.menuItems()
+            webPortalMenuItem.submenu = submenu
+        } else {
+            webPortalMenuItem.title = "登录DlerCloud"
+            webPortalMenuItem.submenu = nil
+        }
+    }
+    
+    @IBAction func actionWebProtal(_ sender: Any) {
+        if WebPortalManager.shared.isLogin {return}
+        
+        
+    }
+    
+}
+
 // MARK: NSMenuDelegate
 extension AppDelegate:NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
@@ -503,6 +528,7 @@ extension AppDelegate:NSMenuDelegate {
     func menuNeedsUpdate(_ menu: NSMenu) {
         syncConfig()
         updateConfigFiles()
+        updateWebProtalMenu()
     }
 
 }

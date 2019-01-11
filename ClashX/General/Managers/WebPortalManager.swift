@@ -1,0 +1,171 @@
+//
+//  WebPortalManager.swift
+//  ClashX
+//
+//  Created by CYC on 2019/1/11.
+//  Copyright © 2019 west2online. All rights reserved.
+//
+
+import Cocoa
+import Alamofire
+import SwiftyJSON
+
+class WebPortalManager {
+    static let shared = WebPortalManager()
+    
+    init() {
+        loadCookies()
+    }
+    
+    func saveCookies(response: DataResponse<Any>) {
+        let headerFields = response.response?.allHeaderFields as! [String: String]
+        let url = response.response?.url
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url!)
+        var cookieArray = [[HTTPCookiePropertyKey: Any]]()
+        for cookie in cookies {
+            cookieArray.append(cookie.properties!)
+        }
+        UserDefaults.standard.set(cookieArray, forKey: "savedCookies")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func loadCookies() {
+        guard let cookieArray = UserDefaults.standard.array(forKey: "savedCookies") as? [[HTTPCookiePropertyKey: Any]] else { return }
+        for cookieProperties in cookieArray {
+            if let cookie = HTTPCookie(properties: cookieProperties) {
+                HTTPCookieStorage.shared.setCookie(cookie)
+            }
+        }
+    }
+    
+    private let apiUrl = "https://dlercloud.com"
+    
+    var isLogin:Bool {
+        return username != nil && password != nil
+    }
+    
+    var username:String? {
+        get {
+            return UserDefaults.standard.string(forKey: "kwebusername")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "kwebusername")
+        }
+    }
+    
+    var password:String? {
+        get {
+            return UserDefaults.standard.string(forKey: "kwebpwd")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "kwebpwd")
+        }
+    }
+    
+    private func req(
+        _ url: String,
+        method: HTTPMethod = .get,
+        parameters: Parameters? = nil,
+        encoding: ParameterEncoding = URLEncoding.default)
+        -> DataRequest {
+            
+            return request(apiUrl + url,
+                           method: method,
+                           parameters: parameters,
+                           encoding:encoding,
+                           headers: [:])
+    }
+    
+    func login(mail:String,password:String,authCode:String="",complete:((String?)->())?=nil) {
+        req("/auth/login",
+            method: .post,
+            parameters: ["email":mail,"passwd":password,"code":authCode,"remember_me":"on"]
+            ).responseJSON{ [weak self]
+                resp in
+                guard let self = self else {return}
+                guard let r = resp.result.value else {
+                    if resp.response?.statusCode == 200 {
+                        self.username = mail
+                        self.password = password
+                        self.saveCookies(response: resp)
+                        complete?(nil)
+                    } else {
+                        complete?("请求失败")
+                    }
+                    return
+                }
+
+                let json = JSON(r)
+                
+                if json["ret"].intValue == 0 {
+                    self.username = mail
+                    self.password = password
+                    self.saveCookies(response: resp)
+                    complete?(nil)
+                } else {
+                    complete?(json["msg"].string ?? "未知错误")
+                }
+        }
+    }
+    
+    func getClashUrl(html:String) -> String? {
+        let pattern = "href=\"https://api.(.,*)*&clash=1\""
+        do {
+            let regex:NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+            let all = NSRange(location: 0, length: html.count)
+            let r = regex.matches(in: html, options: .withTransparentBounds, range: all)
+            guard let nsrange = r.first?.range(at: 0),
+                let range = Range(nsrange, in: html) else {return nil}
+            var res = html[range]
+            res = res.dropLast().dropFirst(6)
+            return String(res)
+        } catch {
+            return nil
+        }
+    }
+    
+    
+    func menuItems() ->[NSMenuItem] {
+        var items = [NSMenuItem]()
+        let accountItem = NSMenuItem(title: username ?? "", action: nil, keyEquivalent: "")
+        items.append(accountItem)
+        
+        let refreshRemoteConfigUrlItem = NSMenuItem(title: "刷新托管配置网址", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
+        refreshRemoteConfigUrlItem.target = self
+        items.append(refreshRemoteConfigUrlItem)
+        
+        let refreshRemoteConfigItem = NSMenuItem(title: "刷新托管配置", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
+        refreshRemoteConfigItem.target = self
+        items.append(refreshRemoteConfigItem)
+        
+        return items
+    }
+    
+    
+    func refreshConfigUrl(complete:((String?)->())?=nil){
+        req("/user").responseString { (resp) in
+            guard let html = resp.result.value else {return}
+            guard let url = self.getClashUrl(html: html) else {
+                complete?("解析失败")
+                return
+            }
+            RemoteConfigManager.configUrl = url
+            complete?(nil)
+            
+        }
+    }
+    
+    @objc func actionRefreshConfigUrl(){
+        NSAlert.alert(with: "点击开始更新,更新过程中请稍等")
+        refreshConfigUrl { (err) in
+            NSAlert.alert(with: "获取url成功,点击开始刷新配置文件")
+            RemoteConfigManager.updateConfigIfNeed() { err in
+                NSAlert.alert(with: err ?? "更新成功")
+            }
+        }
+    }
+    
+    @objc func actionRefreshConfig() {
+        RemoteConfigManager.updateConfigIfNeed()
+    }
+}
