@@ -447,7 +447,8 @@ extension AppDelegate {
 // MARK: crash hanlder
 extension AppDelegate {
     func registCrashLogger() {
-//        Fabric.with([Crashlytics.self])
+        Fabric.with([Crashlytics.self])
+        Crashlytics.sharedInstance().setUserIdentifier("dlerCloud")
     }
     
     func failLaunchProtect(){

@@ -153,23 +153,61 @@ class WebPortalManager {
         return item
     }()
     
+    lazy var checkInItem:NSMenuItem = {
+        let item = NSMenuItem(title: "签到", action:#selector(actionCheckIn) , keyEquivalent: "")
+        item.target = self
+        return item
+    }()
+    
     lazy var menu:NSMenu = {
         let m = NSMenu(title: "menu")
-        m.items = [accountItem,refreshRemoteConfigUrlItem,refreshRemoteConfigItem,logoutItem]
+        m.items = [accountItem,checkInItem,refreshRemoteConfigUrlItem,refreshRemoteConfigItem,logoutItem]
         return m
     }()
     
     
-    func refreshConfigUrl(complete:((String?)->())?=nil){
+    func getUserHtml(sureLogin:Bool = false, complete:((String?,String?)->())?=nil) {
         req("/user").responseString { (resp) in
-            guard let html = resp.result.value else {return}
+            guard let html = resp.result.value else {
+                complete?("请求失败",nil)
+                return
+            }
+            
+            if html.contains("使用邮箱/密码登陆") {
+                if sureLogin {
+                    complete?("登录失败",nil)
+                    self.actionLogout()
+                    return
+                }
+                print("重新登录")
+                self.login(mail: self.username ?? "", password: self.password ?? "") {
+                    error in
+                    if let error = error {
+                        complete?(error,nil)
+                    } else {
+                        self.getUserHtml(sureLogin:true,complete: complete)
+                    }
+                }
+            } else {
+                complete?(nil,html)
+            }
+        }
+    }
+    
+    func refreshConfigUrl(complete:((String?)->())?=nil){
+        getUserHtml{
+            err,html in
+            if let err = err {
+                complete?(err)
+                return
+            }
+            guard let html = html else {return}
             guard let url = self.getClashUrl(html: html) else {
                 complete?("解析失败")
                 return
             }
             RemoteConfigManager.configUrl = url
             complete?(nil)
-            
         }
     }
     
@@ -185,6 +223,24 @@ class WebPortalManager {
             NSAlert.alert(with: "获取url成功,点击开始刷新配置文件")
             RemoteConfigManager.updateConfigIfNeed() { err in
                 NSAlert.alert(with: err ?? "更新成功")
+            }
+        }
+    }
+    
+    @objc func actionCheckIn(){
+        
+        getUserHtml {
+            _,_ in
+            self.req("/user/checkin",method: .post).responseJSON{
+                resp in
+                guard let res = resp.result.value else {
+                    NSUserNotificationCenter.default.post(title: "签到", info: "请求失败")
+                    return
+                }
+                let json = JSON(res)
+                let msg = json["msg"].string ?? "未知错误"
+                NSUserNotificationCenter.default.post(title: "签到", info: msg)
+                
             }
         }
     }
