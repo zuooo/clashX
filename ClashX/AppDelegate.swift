@@ -74,6 +74,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // check config vaild via api
         ConfigFileManager.checkFinalRuleAndShowAlert()
+        
+        if RemoteConfigManager.configUrl != nil {
+            RemoteConfigManager.updateConfigIfNeed { err in
+                if let err = err {
+                    NSUserNotificationCenter.default.post(title: "配置更新失败", info: err)
+                } else {
+                    NSUserNotificationCenter.default.post(title: "配置更新", info: "更新成功")
+                }
+            }
+        }
 
     }
 
@@ -499,10 +509,10 @@ extension AppDelegate {
 extension AppDelegate {
     func updateWebProtalMenu() {
         if WebPortalManager.shared.isLogin {
-            webPortalMenuItem.title = "DlerCloud:已登录"
+            webPortalMenuItem.title = "Dler Cloud：已登录"
             webPortalMenuItem.submenu = WebPortalManager.shared.menu
         } else {
-            webPortalMenuItem.title = "DlerCloud:未登录"
+            webPortalMenuItem.title = "Dler Cloud：未登录"
             webPortalMenuItem.submenu = nil
         }
     }

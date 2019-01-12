@@ -60,7 +60,14 @@ class RemoteConfigManager: NSObject {
     
     static func updateConfigIfNeed(complete:((String?)->())?=nil) {
         getRemoteConfigString { (host,string) in
-            guard let newConfigString = string else {alert(with: "Download fail"); return}
+            guard let newConfigString = string else {
+                if let complete = complete {
+                    complete("Download fail")
+                } else {
+                    alert(with: "Download fail")
+                }
+                return
+            }
             
             let savePath = kConfigFolderPath.appending(host).appending(".yml")
             let fm = FileManager.default

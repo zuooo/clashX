@@ -103,7 +103,7 @@ class WebPortalManager {
 
                 let json = JSON(r)
                 
-                if json["ret"].intValue == 0 {
+                if json["ret"].intValue == 1 {
                     self.username = mail
                     self.password = password
                     self.saveCookies(response: resp)

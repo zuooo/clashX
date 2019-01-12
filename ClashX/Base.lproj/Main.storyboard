@@ -6,10 +6,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--登录-->
         <scene sceneID="Vbg-5T-hWa">
             <objects>
-                <viewController storyboardIdentifier="loginViewController" showSeguePresentationStyle="single" id="qUn-O2-deb" customClass="LoginViewController" customModule="ClashX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="登录" storyboardIdentifier="loginViewController" showSeguePresentationStyle="single" id="qUn-O2-deb" customClass="LoginViewController" customModule="ClashX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="NrO-oZ-eJL">
                         <rect key="frame" x="0.0" y="0.0" width="389" height="291"/>
                         <autoresizingMask key="autoresizingMask"/>
