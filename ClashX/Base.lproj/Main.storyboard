@@ -9,7 +9,7 @@
         <!--Login View Controller-->
         <scene sceneID="Vbg-5T-hWa">
             <objects>
-                <viewController id="qUn-O2-deb" customClass="LoginViewController" customModule="ClashX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginViewController" showSeguePresentationStyle="single" id="qUn-O2-deb" customClass="LoginViewController" customModule="ClashX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="NrO-oZ-eJL">
                         <rect key="frame" x="0.0" y="0.0" width="389" height="291"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -24,7 +24,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-uO-O30">
                                         <rect key="frame" x="24" y="86" width="35" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="邮箱:" id="nig-nK-uRh">
-                                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -44,7 +44,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i1p-9e-Mto">
                                         <rect key="frame" x="24" y="46" width="35" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="密码:" id="ggR-6I-Wvb">
-                                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -64,7 +64,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="di4-pe-QhN">
                                         <rect key="frame" x="-2" y="6" width="61" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="两步验证:" id="0SK-Nt-8dH">
-                                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -107,7 +107,7 @@
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="登录" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hOq-Hs-ROt">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <font key="font" usesAppearanceFont="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="actionLogin:" target="qUn-O2-deb" id="0SB-iZ-h8x"/>

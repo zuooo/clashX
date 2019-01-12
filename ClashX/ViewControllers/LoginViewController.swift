@@ -20,6 +20,9 @@ class LoginViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         logoView.image = logoView.image?.tint(color: NSColor.black)
+        view.window?.styleMask.remove(.resizable)
+        view.window?.styleMask.remove(.miniaturizable)
+        
     }
     
     @IBAction func actionLogin(_ sender: Any) {
@@ -33,6 +36,8 @@ class LoginViewController: NSViewController {
             return
         }
         
+        view.window?.styleMask.remove(.closable)
+
         let hud = MBProgressHUD(view: self.view)!
         hud.labelText = "登录中"
         hud.show(true)
@@ -44,7 +49,7 @@ class LoginViewController: NSViewController {
             if let errDesp = errDesp {
                 NSAlert.alert(with: errDesp)
                 hud.hide(true)
-                print(errDesp)
+                self.view.window?.styleMask.insert(.closable)
                 return
             }
             hud.labelText = "获取托管配置文件地址"
@@ -54,6 +59,7 @@ class LoginViewController: NSViewController {
                     NSAlert.alert(with: errDesp)
                     hud.hide(true)
                     print(errDesp)
+                    self.view.window?.styleMask.insert(.closable)
                     return
                 }
                 
@@ -63,6 +69,7 @@ class LoginViewController: NSViewController {
 
                     if let err = err {
                         NSAlert.alert(with:err)
+                        self.view.window?.styleMask.insert(.closable)
                         return
                     }
                     NSAlert.alert(with: "配置获取成功")

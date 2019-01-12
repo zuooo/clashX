@@ -49,8 +49,14 @@ class WebPortalManager {
             return UserDefaults.standard.string(forKey: "kwebusername")
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "kwebusername")
+            if let name = newValue {
+                accountItem.title = name
+                UserDefaults.standard.set(name, forKey: "kwebusername")
+            } else {
+                UserDefaults.standard.removeObject(forKey: "kwebusername")
+            }
         }
+        
     }
     
     var password:String? {
@@ -124,22 +130,34 @@ class WebPortalManager {
         }
     }
     
+    lazy var accountItem:NSMenuItem = {
+        return NSMenuItem(title: username ?? "", action: nil, keyEquivalent: "")
+    }()
+
     
-    func menuItems() ->[NSMenuItem] {
-        var items = [NSMenuItem]()
-        let accountItem = NSMenuItem(title: username ?? "", action: nil, keyEquivalent: "")
-        items.append(accountItem)
-        
-        let refreshRemoteConfigUrlItem = NSMenuItem(title: "刷新托管配置网址", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
-        refreshRemoteConfigUrlItem.target = self
-        items.append(refreshRemoteConfigUrlItem)
-        
-        let refreshRemoteConfigItem = NSMenuItem(title: "刷新托管配置", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
-        refreshRemoteConfigItem.target = self
-        items.append(refreshRemoteConfigItem)
-        
-        return items
-    }
+    lazy var refreshRemoteConfigUrlItem:NSMenuItem = {
+        let item = NSMenuItem(title: "更新托管配置网址", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
+        item.target = self
+        return item
+    }()
+    
+    lazy var refreshRemoteConfigItem:NSMenuItem = {
+        let item = NSMenuItem(title: "更新托管配置", action:#selector(actionRefreshConfigUrl) , keyEquivalent: "")
+        item.target = self
+        return item
+    }()
+
+    lazy var logoutItem:NSMenuItem = {
+        let item = NSMenuItem(title: "注销", action:#selector(actionLogout) , keyEquivalent: "")
+        item.target = self
+        return item
+    }()
+    
+    lazy var menu:NSMenu = {
+        let m = NSMenu(title: "menu")
+        m.items = [accountItem,refreshRemoteConfigUrlItem,refreshRemoteConfigItem,logoutItem]
+        return m
+    }()
     
     
     func refreshConfigUrl(complete:((String?)->())?=nil){
@@ -153,6 +171,12 @@ class WebPortalManager {
             complete?(nil)
             
         }
+    }
+    
+    @objc func actionLogout() {
+        self.username = nil
+        self.password = nil
+        UserDefaults.standard.removeObject(forKey: "savedCookies")
     }
     
     @objc func actionRefreshConfigUrl(){

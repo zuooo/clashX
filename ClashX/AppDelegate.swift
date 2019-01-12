@@ -76,8 +76,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // check config vaild via api
         ConfigFileManager.checkFinalRuleAndShowAlert()
-        
-
 
     }
 
@@ -502,12 +500,10 @@ extension AppDelegate {
 extension AppDelegate {
     func updateWebProtalMenu() {
         if WebPortalManager.shared.isLogin {
-            webPortalMenuItem.title = "DlerCloud已登录"
-            let submenu = NSMenu(title: "DlerCloud已登录")
-            submenu.items = WebPortalManager.shared.menuItems()
-            webPortalMenuItem.submenu = submenu
+            webPortalMenuItem.title = "DlerCloud:已登录"
+            webPortalMenuItem.submenu = WebPortalManager.shared.menu
         } else {
-            webPortalMenuItem.title = "登录DlerCloud"
+            webPortalMenuItem.title = "DlerCloud:未登录"
             webPortalMenuItem.submenu = nil
         }
     }
