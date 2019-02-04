@@ -38,7 +38,7 @@ class WebPortalManager {
         }
     }
     
-    private let apiUrl = "https://dlercloud.com"
+    private let apiUrl = "https://dlercloud.net"
     
     var isLogin:Bool {
         return username != nil && password != nil
@@ -115,7 +115,7 @@ class WebPortalManager {
     }
     
     func getClashUrl(html:String) -> String? {
-        let pattern = "href=\"https://api.(.,*)*&clash=1\""
+        let pattern = "href=\"https://(.,*)*&clash=1\""
         do {
             let regex:NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
             let all = NSRange(location: 0, length: html.count)

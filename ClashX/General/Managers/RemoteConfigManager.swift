@@ -46,9 +46,10 @@ class RemoteConfigManager: NSObject {
     
     static func getRemoteConfigString(handler:@escaping (String, String?)->()) {
         guard let urlString = configUrl,
-            let host = URL(string: urlString)?.host
+            var host = URL(string: urlString)?.host
             else {alert(with: "Not config url set!");return}
         
+        host = "DlerCloud"
         request(urlString, method: .get).responseString(encoding: .utf8) { (res) in
             if let s = res.result.value {
                 handler(host,s)
