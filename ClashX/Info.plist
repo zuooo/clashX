@@ -51,5 +51,9 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>SWBApplication</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://yichengchen.github.io/clashX/appcast.xml</string>
 </dict>
 </plist>
