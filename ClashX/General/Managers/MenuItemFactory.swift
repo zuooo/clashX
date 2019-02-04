@@ -11,6 +11,9 @@ import SwiftyJSON
 import RxCocoa
 
 class MenuItemFactory {
+    
+    static private let shared = MenuItemFactory()
+    
     static func menuItems(completionHandler:@escaping (([NSMenuItem])->())){
         ApiRequest.requestProxyGroupList { (res) in
             let dataDict = JSON(res)
@@ -19,6 +22,7 @@ class MenuItemFactory {
                 completionHandler(menuItems)
                 return
             }
+            
             for proxyGroup in dataDict.dictionaryValue.sorted(by: {  $0.0 < $1.0}) {
                 var menu:NSMenuItem?
                 switch proxyGroup.value["type"].stringValue {
@@ -29,7 +33,10 @@ class MenuItemFactory {
                 if (menu != nil) {menuItems.append(menu!)}
                 
             }
-            completionHandler(menuItems.reversed())
+            DispatchQueue.main.async {
+                completionHandler(menuItems.reversed())
+            }
+            
         }
     }
     
@@ -62,16 +69,12 @@ class MenuItemFactory {
 
             if let delay = SpeedDataRecorder.shared.getDelay(proxy.stringValue) {
                 let menuItemView = ProxyMenuItemView.create(proxy: proxy.stringValue, delay: delay)
-                menuItemView.isSelected = selected
-                menuItemView.onClick = { [weak proxyItem] in
-                    guard let proxyItem = proxyItem else {return}
-                    MenuItemFactory.actionSelectProxy(sender: proxyItem)
-                }
-                let fittitingWidth = menuItemView.fittingSize.width
-                if (fittitingWidth > submenu.minimumWidth) {
-                    submenu.minimumWidth = fittitingWidth
+                let width = menuItemView.fittingSize.width
+                if width > submenu.minimumWidth {
+                    submenu.minimumWidth = width
                 }
                 proxyItem.view = menuItemView
+                
             }
             
             if selected {hasSelected = true}
@@ -80,7 +83,14 @@ class MenuItemFactory {
             
         }
         for item in submenu.items {
-            item.view?.frame.size.width = submenu.minimumWidth
+            if let menuItemView = item.view {
+                DispatchQueue.global().async {
+                    menuItemView.frame.size = CGSize(width: submenu.minimumWidth, height: 18)
+                    item.image = NSImage(data: menuItemView.dataWithPDF(inside: menuItemView.bounds))
+                    item.title = ""
+                    item.view = nil
+                }
+            }
         }
         menu.submenu = submenu
         if (!hasSelected && submenu.items.count>0) {

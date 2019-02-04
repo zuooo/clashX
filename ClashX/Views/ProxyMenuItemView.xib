@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2xI-Y4-PnW">
-                    <rect key="frame" x="18" y="0.0" width="77" height="18"/>
+                    <rect key="frame" x="-2" y="0.0" width="77" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="aV7-na-wzX"/>
                     </constraints>
@@ -32,14 +32,9 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G02-U6-KlU">
-                    <rect key="frame" x="2" y="1" width="17" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="menuOnStateTemplateName" id="KJc-uZ-b6K"/>
-                </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="2xI-Y4-PnW" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="2Ez-3J-oJy"/>
+                <constraint firstItem="2xI-Y4-PnW" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="2Ez-3J-oJy"/>
                 <constraint firstAttribute="bottom" secondItem="aYx-Wc-u4X" secondAttribute="bottom" id="4cP-1x-iyV"/>
                 <constraint firstItem="aYx-Wc-u4X" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2xI-Y4-PnW" secondAttribute="trailing" constant="15" id="CR1-j3-Rh9"/>
                 <constraint firstItem="aYx-Wc-u4X" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="M8d-FS-eL5"/>
@@ -50,12 +45,8 @@
             <connections>
                 <outlet property="delayLabel" destination="aYx-Wc-u4X" id="4ie-3u-ePM"/>
                 <outlet property="proxyNameLabel" destination="2xI-Y4-PnW" id="h8l-xP-rbC"/>
-                <outlet property="selectedImageView" destination="G02-U6-KlU" id="JxC-gB-yiD"/>
             </connections>
             <point key="canvasLocation" x="-138" y="202"/>
         </customView>
     </objects>
-    <resources>
-        <image name="menuOnStateTemplateName" width="128" height="128"/>
-    </resources>
 </document>
