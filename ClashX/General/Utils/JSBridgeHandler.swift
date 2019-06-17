@@ -63,12 +63,6 @@ class JsBridgeUtil {
             }
         }
         
-        bridge.registerHandler("QRcodesFromScreen") {(anydata, responseCallback) in
-            let urls = QRCodeUtil.ScanQRCodeOnScreen()
-            responseCallback?(urls)
-        }
-   
-        
         // 剪贴板
         bridge.registerHandler("setPasteboard") {(anydata, responseCallback) in
             if let str = anydata as? String {
@@ -106,7 +100,6 @@ class JsBridgeUtil {
                     } else {
                         resp = delay
                     }
-                    SpeedDataRecorder.shared.setDelay(proxyName, delay: delay)
                     responseCallback?(resp)
                 }
             } else {

@@ -4,7 +4,7 @@ import AppKit
 
 class ProxyConfigHelperManager {
     static let kProxyConfigFolder = (NSHomeDirectory() as NSString).appendingPathComponent("/.config/clash")
-    static let kVersion = "0.1.2"
+    static let kVersion = "0.1.3"
 
     
     static func vaildHelper() -> Bool {
@@ -70,6 +70,15 @@ class ProxyConfigHelperManager {
     static func checkMMDB() {
         let fileManage = FileManager.default
         let destMMDBPath = "\(kProxyConfigFolder)/Country.mmdb"
+        
+        // Remove old mmdb file after version update.
+        if fileManage.fileExists(atPath: destMMDBPath) {
+            if AppVersionUtil.hasVersionChanged || AppVersionUtil.isFirstLaunch {
+                try? fileManage.removeItem(atPath: destMMDBPath)
+            }
+        }
+        
+        
         if !fileManage.fileExists(atPath: destMMDBPath) {
             if let mmdbPath = Bundle.main.path(forResource: "Country", ofType: "mmdb") {
                 try? fileManage.copyItem(at: URL(fileURLWithPath: mmdbPath), to: URL(fileURLWithPath: destMMDBPath))
@@ -80,9 +89,12 @@ class ProxyConfigHelperManager {
     static func setUpSystemProxy(port: Int?,socksPort: Int?) -> Bool {
         let task = Process()
         task.launchPath = "\(kProxyConfigFolder)/ProxyConfig"
+        let hookTask:String?
         if let port = port,let socksPort = socksPort {
+            hookTask = UserDefaults.standard.string(forKey: "kProxyEnableHook")
             task.arguments = [String(port),String(socksPort), "enable"]
         } else {
+            hookTask = UserDefaults.standard.string(forKey: "kProxyDisableHook")
             task.arguments = ["0", "0", "disable"]
         }
         
@@ -93,6 +105,15 @@ class ProxyConfigHelperManager {
         if task.terminationStatus != 0 {
             return false
         }
+        
+        DispatchQueue.global().async {
+            if let command = hookTask {
+                let appleScriptStr = "do shell script \"\(command)\""
+                let appleScript = NSAppleScript(source: appleScriptStr)
+                _ = appleScript?.executeAndReturnError(nil)
+            }
+        }
+        
         return true
     }
     

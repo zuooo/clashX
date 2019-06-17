@@ -17,9 +17,12 @@ class ConfigManager {
     private let disposeBag = DisposeBag()
     var apiPort = "8080"
     var apiSecret:String? = nil
-
-    private init(){
-        setupNetworkNotifier()
+    
+    init() {
+        UserDefaults.standard.rx.observe(Bool.self, "kSDisableShowCurrentProxyInMenu").bind {
+            [weak self] disable in
+            self?.disableShowCurrentProxyInMenu = disable ?? false
+        }.disposed(by: disposeBag)
     }
     
     var currentConfig:ClashConfig?{
@@ -42,6 +45,8 @@ class ConfigManager {
             isRunningVariable.value = newValue
         }
     }
+    
+    var disableShowCurrentProxyInMenu = false
     
     static var selectConfigName:String{
         get {
@@ -137,23 +142,6 @@ class ConfigManager {
         }
     }
     
-    func setupNetworkNotifier() {
-        NetworkChangeNotifier.start()
-        NotificationCenter
-            .default
-            .rx
-            .notification(kSystemNetworkStatusDidChange)
-            .debounce(2, scheduler: MainScheduler.instance)
-            .subscribeOn(MainScheduler.instance)
-            .bind{ _ in
-            let (http,https,socks) = NetworkChangeNotifier.currentSystemProxySetting()
-            let proxySetted =
-                http == (self.currentConfig?.port ?? 0) &&
-                https == (self.currentConfig?.port ?? 0) &&
-                socks == (self.currentConfig?.socketPort ?? 0)
-            self.proxyPortAutoSet = proxySetted
-        }.disposed(by: disposeBag)
-    }
 }
 
 extension ConfigManager {
